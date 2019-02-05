@@ -1,0 +1,38 @@
+// Grid
+$enable-flex:         false !default;
+$enable-grid-classes: true !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 544px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+$container-max-widths: (
+  sm: 576px,
+  md: 720px,
+  lg: 940px,
+  xl: 1140px
+) !default;
+
+$grid-columns:      12 !default;
+$grid-gutter-width: 30px !default;
+
+
+// Colors
+$body-bg:           #ffffff !default;
+$alt-bg:            #302e2f !default;
+$primary-color:     #39b54a !default;
+$primary-hover:     darken($primary-color, 5%);
+$text-color:        #313131 !default;
+$text-opacity:      0.65 !default;
+$text-on-primary:   #ffffff !default;
+$border-color:      #ebebeb !default;
+$border-color-foot: rgba(#fff, 0.15) !default;
+$header-height:     96px;
+
+// Fonts
+$primary-font:   'Rubik', sans-serif;
+$secondary-font: serif;
