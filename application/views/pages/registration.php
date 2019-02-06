@@ -16,7 +16,7 @@
                                 <form id="registeruser" name="registeruser">
                                     <div class="w3-col l12">
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                            <label>Gender: </label>
+                                            <label>Gender: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <span class="hidden-xs"> 
                                                 <input type="radio" name="gender" value="Male" class="w3-radio w3-small" required> Male</span>
                                             <span class="hidden-xs"> 
@@ -30,11 +30,11 @@
 
                                     <div class="w3-col l12">
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                            <label>Email-Id: </label>
+                                            <label>Email-Id: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <input type="email" name="eMail" id="eMail" autocomplete="off" value="" class="w3-input w3-small" placeholder="Enter email here" required>
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                            <label>Package: </label>
+                                            <label>Package: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <select class="w3-input w3-text-grey" name="package" id="package" required>
                                                 <option value="0" class="w3-light-grey" selected>Select your Package*</option>
                                                 <?php
@@ -50,22 +50,22 @@
 
                                     <div class="w3-col l12">
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                            <label>Username: </label>
+                                            <label>Username: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <input type="text" name="username" autocomplete="off" value="" id="username" class="w3-input w3-small" placeholder="Enter password here" required>
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                            <label>Password: </label>
+                                            <label>Password: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <input type="text" name="password" autocomplete="off" value="" id="password" class="w3-input w3-small" placeholder="Enter password here" required>
                                         </div>
                                     </div>
 
                                     <div class="w3-col l12 w3-margin-bottom">
                                         <div class="col-md-6 col-sm-12 col-xs-12">
-                                            <label>Company Name: </label>
+                                            <label>Company Name: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <input type="text" name="company_name" id="company_name" autocomplete="off" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-xs-12">
-                                            <label>Phone Number: </label>
+                                            <label>Phone Number: <font color ="red"><span id ="pname_star">*</span></font></label>
                                             <input type="number" name="ph_number" id="ph_number" autocomplete="off" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
                                         </div>
                                     </div>

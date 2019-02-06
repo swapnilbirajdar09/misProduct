@@ -134,7 +134,7 @@
     <!--         view all employee div ends -->
 </div>
 <script>
-    // fun for create project
+    // fun for create employee
     $("#createEmployee_form").on('submit', function (e) {
         e.preventDefault();
         dataString = $("#createEmployee_form").serialize();
@@ -147,14 +147,13 @@
             processData: false,
             beforeSend: function () {
                 $('#register').prop('disabled', true);
-                $('#register').html('<i class="fa fa-circle-o-notch fa-spin"></i> Creating Project');
+                $('#register').html('<i class="fa fa-circle-o-notch fa-spin"></i> Saving Details');
             },
             success: function (response) {
                 $('#register').prop('disabled', false);
                 $('#register').html('<i class="fa fa-user"></i> Create Employee');
-                console.log(response);
+                //console.log(response);
                 var data = JSON.parse(response);
-
                 // response message
                 switch (data.status) {
                     case 'success':
@@ -162,7 +161,6 @@
                         setTimeout(function () {
                             $('#createEmployee_form').trigger("reset");
                             $('.alert').fadeOut('fast');
-
                             //window.location.reload();
                         }, 5000); // <-- time in milliseconds 
                         break;
@@ -180,6 +178,7 @@
                             $('.alert').fadeOut('fast');
                         }, 8000); // <-- time in milliseconds
                         break;
+                        
                     default:
                         $('#response_msg').html('<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Fatal Error-</strong> Something went wrong. Please Logout your account and Try Logging in again.</div>');
                         setTimeout(function () {
@@ -292,8 +291,6 @@
                 }
             });
         };
-
-
     });
 </script>
 <script src="<?php echo base_url(); ?>assets/js/module/user/createUser.js"></script>

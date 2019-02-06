@@ -28,14 +28,15 @@
                             <div class="header-wrap">
                                 <div class="header-left">
                                     <h1 class="logo">
-                                        <a href="index.html">struct</a>
+                                        <a href="<?php echo base_url();?>">struct</a>
                                     </h1> </div>
                                 <div class="header-right">
                                     <nav class="nav">
                                         <ul class="navigation">
-                                            <li class="current-menu-item"><a href="index.html">Home</a></li>
-                                            <li class="current-menu-item"><a href="index.html">About Us</a></li>
-                                            <li class="current-menu-item"><a href="index.html">Contact Us</a></li>
+                                            <li class="current-menu-item"><a href="<?php echo base_url();?>">Home</a></li>
+                                            <li class="current-menu-item"><a href="#">About Us</a></li>
+                                            <li class="current-menu-item"><a href="#">Contact Us</a></li>
+                                            <li class="current-menu-item"><a href="<?php echo base_url();?>login">Login</a></li>
 <!--                                            <li><a href="blog.html">Blog</a>
                                                 <ul>
                                                     <li><a href="blog.html">Blog Listing</a></li>

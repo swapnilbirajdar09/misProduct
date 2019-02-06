@@ -123,10 +123,10 @@
             success: function (response) {
                 $('#updateDocBtn').prop('disabled', false);
                 $('#updateDocBtn').html('<i class="fa fa-briefcase"></i> Create Project');
-                console.log(response);
+                //console.log(response);
                 var data = JSON.parse(response);
 
-                alert(data);
+                //alert(data);
                 // response message
                 switch (data.status) {
                     case 'success':
