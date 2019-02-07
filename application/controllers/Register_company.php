@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Registration extends CI_Controller {
+class Register_company extends CI_Controller {
 
     // Login controller
     public function __construct() {
@@ -14,17 +14,53 @@ class Registration extends CI_Controller {
 
     // main index function
     public function index() {
-    
+        $data['package'] = Register_company::getAllPackages();
+        $data['roles'] = Register_company::getAllRoles();
         $this->load->view('includes/header');
-        $this->load->view('pages/registration');
+        $this->load->view('pages/registerCompany',$data);
         $this->load->view('includes/footer');
+    }
+
+    public function getAllRoles() {
+        $path = base_url();
+        $url = $path . 'api/admin/Admin_api/getAllRoles';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        // authenticate API
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+        curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPGET, 1);
+        $output = curl_exec($ch);
+        //close cURL resource
+        curl_close($ch);
+        $response = json_decode($output, true);
+        //print_r($output);die();
+        return $response;
+    }
+    
+    public function getAllPackages() {
+        $path = base_url();
+        $url = $path . 'api/admin/Admin_api/getAllPackages';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        // authenticate API
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+        curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPGET, 1);
+        $output = curl_exec($ch);
+        //close cURL resource
+        curl_close($ch);
+        $response = json_decode($output, true);
+        //print_r($output);die();
+        return $response;
     }
 
     public function register_user() {
         extract($_POST);
         $data = $_POST;
         //print_r($data);die();
-
         $path = base_url();
         $url = $path . 'api/admin/Registeruser_api/register_user';
         $ch = curl_init($url);
@@ -34,8 +70,8 @@ class Registration extends CI_Controller {
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
-//        echo $response_json;
-//        die();
+        echo $response_json;
+        die();
 
         if ($response == '200') {
             echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round">
@@ -48,8 +84,7 @@ class Registration extends CI_Controller {
                 $(this).remove();
                 });
                 window.location.reload();
-                }, 1000);
-                
+                }, 1000);                
                 </script>';
         } elseif ($response == '700') {
             echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round">
@@ -77,7 +112,6 @@ class Registration extends CI_Controller {
                         </script>';
         }
     }
-
 
 }
 

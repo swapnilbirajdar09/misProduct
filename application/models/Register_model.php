@@ -11,6 +11,11 @@ class Register_model extends CI_Model {
 //        print_r($data);
 //        die();
         extract($data);
+        
+        $Arr = explode('/', $role);
+        $role_id = $Arr[0];
+        $role_name = $Arr[1];
+        
         $pac = $package;
         $package_select = explode("|", $pac);
         //print_r($package_select);die();
@@ -32,29 +37,26 @@ class Register_model extends CI_Model {
         if ($email_exist == '0') {
 
             $result = array(
-                'gender' => $gender,
-                'email' => $eMail,
-                'username' => $username,
+                'role_id' => 1,
+                'user_email' => $eMail,
+                'user_name' => $username,
                 'password' => base64_encode($password),
-                'registered_date' => date('Y-m-d'),
-                'expiry_date' => $expiry_date,
-                'package_purchased' => $package_select[0],
+                'created_date' => date('Y-m-d'),
                 'status' => '1',
-                'company_name' => addslashes($company_name),
-                'role' => 'Admin',
-                'phone_no' => $ph_number
+                'role' => $role_name,
             );
 
             $this->db->insert('user_tab', $result);
 
             $insert_id = $this->db->insert_id();
-            $profile_key = substr(base64_encode($insert_id), 0, 4);
+            //$profile_key = substr(base64_encode($insert_id), 0, 4);
 
             $profile_tab = array(
-                'user_id' => $insert_id
-//                'user_profile_key' => 'BPARI#' . date('Ymd') . '0' . $insert_id . $profile_key
+                'user_id' => $insert_id,
+                'expiry_date' => $expiry_date,
+                'package_purchased' => $package_select[0],
             );
-            $this->db->insert('profile_tab', $profile_tab);
+            $this->db->insert('userdetails_tab', $profile_tab);
             if ($this->db->affected_rows() > 0) {
                 return 200;
             } else {
@@ -79,6 +81,5 @@ class Register_model extends CI_Model {
             return 1;
         }
     }
-
 
 }

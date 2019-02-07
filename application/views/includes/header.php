@@ -52,7 +52,7 @@ if ($admin_name != '') {
                                     <li><a href="<?php echo base_url(); ?>user_dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                                     <?php if ($role != 'Employee') { ?>
 
-                                        <li><a href="<?php echo base_url(); ?>registration"><i class="fa fa-user"></i> Register User </a></li>
+                                        <li><a href="<?php echo base_url(); ?>register_company"><i class="fa fa-user"></i> Register Company </a></li>
                                         <li><a href="<?php echo base_url(); ?>createproject"><i class="fa fa-bars"></i> Create Project </a></li>
                                         <li><a href="<?php echo base_url(); ?>employee"><i class="fa fa-users"></i> Create Employee </a></li>
                                         <li><a href="<?php echo base_url(); ?>assignemployee"><i class="fa fa-folder-open"></i> Assign Employee To Project </a></li>
