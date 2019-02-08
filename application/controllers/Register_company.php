@@ -17,7 +17,7 @@ class Register_company extends CI_Controller {
         $data['package'] = Register_company::getAllPackages();
         $data['roles'] = Register_company::getAllRoles();
         $this->load->view('includes/header');
-        $this->load->view('pages/registerCompany',$data);
+        $this->load->view('pages/registerCompany', $data);
         $this->load->view('includes/footer');
     }
 
@@ -38,7 +38,7 @@ class Register_company extends CI_Controller {
         //print_r($output);die();
         return $response;
     }
-    
+
     public function getAllPackages() {
         $path = base_url();
         $url = $path . 'api/admin/Admin_api/getAllPackages';
@@ -61,6 +61,36 @@ class Register_company extends CI_Controller {
         extract($_POST);
         $data = $_POST;
         //print_r($data);die();
+        if ($role == '0') {
+            echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> Please Select Role First.
+                </div>
+                <script>
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                        });
+                        }, 5000);
+                        </script>';
+            die();
+        }
+        
+         if ($package == '0') {
+            echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> Please Select Package First.
+                </div>
+                <script>
+                window.setTimeout(function() {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                        });
+                        }, 5000);
+                        </script>';
+            die();
+        }
+
         $path = base_url();
         $url = $path . 'api/admin/Registeruser_api/register_company';
         $ch = curl_init($url);
@@ -89,7 +119,7 @@ class Register_company extends CI_Controller {
         } elseif ($response == '700') {
             echo '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Warning!</strong> Email Id Already Exists.
+                <strong>Warning!</strong> Email Id OR Username Already Exists.
                 </div>
                 <script>
                 window.setTimeout(function() {

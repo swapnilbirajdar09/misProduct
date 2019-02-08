@@ -1,6 +1,10 @@
 <?php
 $admin_name = $this->session->userdata('session_name');
 $role = $this->session->userdata('role');
+//print_r($role);die();
+$roles = explode('/', $role);
+$role_id = $roles[0];
+$role_name = $roles[1];
 if ($admin_name != '') {
     //     //check session variable set or not, otherwise logout
     // redirect('user_dashboard');
@@ -48,18 +52,31 @@ if ($admin_name != '') {
                         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                             <div class="menu_section">
                                 <!-- <h3>General</h3> -->
-                                <ul class="nav side-menu">
-                                    <li><a href="<?php echo base_url(); ?>user_dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
-                                    <?php if ($role != 'Employee') { ?>
-
+                                <?php if ($role_name == 'Super_admin') { ?>
+                                    <ul class="nav side-menu">
+                                        <li><a href="<?php echo base_url(); ?>user_dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
                                         <li><a href="<?php echo base_url(); ?>register_company"><i class="fa fa-user"></i> Register Company </a></li>
                                         <li><a href="<?php echo base_url(); ?>createproject"><i class="fa fa-bars"></i> Create Project </a></li>
                                         <li><a href="<?php echo base_url(); ?>employee"><i class="fa fa-users"></i> Create Employee </a></li>
                                         <li><a href="<?php echo base_url(); ?>assignemployee"><i class="fa fa-folder-open"></i> Assign Employee To Project </a></li>
                                         <li><a href="<?php echo base_url(); ?>settings"><i class="fa fa-cog"></i> Settings </a></li>
-                                    <?php } ?>
-
-                                </ul>
+                                    </ul>
+                                <?php } ?>
+                                <?php if ($role_name == 'Company_admin') { ?>
+                                    <ul class="nav side-menu">
+                                        <li><a href="<?php echo base_url(); ?>user_dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+                                        <li><a href="<?php echo base_url(); ?>createproject"><i class="fa fa-bars"></i> Create Project </a></li>
+                                        <li><a href="<?php echo base_url(); ?>employee"><i class="fa fa-users"></i> Create Employee </a></li>
+                                        <li><a href="<?php echo base_url(); ?>assignemployee"><i class="fa fa-folder-open"></i> Assign Employee To Project </a></li>
+                                        <li><a href="<?php echo base_url(); ?>settings"><i class="fa fa-cog"></i> Settings </a></li>
+                                    </ul>
+                                <?php } ?>
+                                 <?php if ($role_name == 'Employee') { ?>
+                                    <ul class="nav side-menu">
+                                        <li><a href="<?php echo base_url(); ?>user_dashboard"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+                                        <li><a href="<?php echo base_url(); ?>settings"><i class="fa fa-cog"></i> Settings </a></li>
+                                    </ul>
+                                <?php } ?>
                             </div>
                             <div class="menu_section">
                             </div>
