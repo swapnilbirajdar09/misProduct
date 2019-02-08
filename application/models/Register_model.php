@@ -7,7 +7,7 @@ class Register_model extends CI_Model {
     }
 
     // --------------function to register user
-    public function register_user($data) {
+    public function register_company($data) {
 //        print_r($data);
 //        die();
         extract($data);

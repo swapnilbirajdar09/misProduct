@@ -57,12 +57,12 @@ class Register_company extends CI_Controller {
         return $response;
     }
 
-    public function register_user() {
+    public function register_company() {
         extract($_POST);
         $data = $_POST;
         //print_r($data);die();
         $path = base_url();
-        $url = $path . 'api/admin/Registeruser_api/register_user';
+        $url = $path . 'api/admin/Registeruser_api/register_company';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);

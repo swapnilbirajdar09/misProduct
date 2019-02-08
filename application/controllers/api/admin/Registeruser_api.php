@@ -11,10 +11,10 @@ class Registeruser_api extends REST_Controller {
     }
 
     // api to get all document types
-    public function register_user_post() {
+    public function register_company_post() {
         extract($_POST);
         $data = $_POST;
-        $result = $this->Register_model->register_user($data);
+        $result = $this->Register_model->register_company($data);
         return $this->response($result);
     }
 
