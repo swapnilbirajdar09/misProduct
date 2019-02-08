@@ -26,7 +26,7 @@
 
                 <div class="container x_content">
                     <form id="createEmployee_form" name="createEmployee_form" method="post">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
+<!--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
                             <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Gender: </label>
                                 <span class="hidden-xs"> 
@@ -38,17 +38,17 @@
                                     <span> <input type="radio" name="gender" value="Female" class="w3-radio" style="margin-left: 15px" required> Female</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
                             <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Email-Id: </label>
                                 <input type="email" name="eMail" id="eMail" autocomplete="off" value="" class="w3-input w3-small" placeholder="Enter email here" required >
                             </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
+<!--                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Phone Number: </label>
                                 <input type="number" name="ph_number" id="ph_number" autocomplete="off" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">

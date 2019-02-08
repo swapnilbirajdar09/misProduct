@@ -51,7 +51,8 @@ class Login extends CI_Controller {
                 'user_id' => $response['user_id'],
                 'role' => $response['role'],
                 'session_name' => $response['usersession_name'],
-                'email' => $response['email']
+                'email' => $response['email'],
+                'company_id' => $response['company_id']
             );
 
             //start session of user if login success
