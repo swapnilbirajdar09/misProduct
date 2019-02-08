@@ -50,11 +50,11 @@ class Employee_model extends CI_Model {
         $this->db->query($sql);
         if ($this->db->affected_rows() > 0) {
             $response = array(
-                'status' => 'success',
+                'status' => 200,
                 'status_message' => 'Role Deleted Successfully.');
         } else {
             $response = array(
-                'status' => 'error',
+                'status' => 500,
                 'status_message' => 'Role Not Deleted Successfully.');
         }
         return $response;
@@ -101,7 +101,7 @@ class Employee_model extends CI_Model {
                 'cost_per_day' => $costPerDay
             );
             $this->db->insert('userdetails_tab', $profile_tab);
-            $sendEmail = Employee_model::send_Email($eMail, $password, $company_name);
+            $sendEmail = Employee_model::send_Email($eMail, $password, $company_name, $username);
             //print_r($sendEmail);die();
             if ($sendEmail['status'] == 200) {
                 if ($this->db->affected_rows() > 0) {
@@ -135,7 +135,7 @@ class Employee_model extends CI_Model {
 
     //-- fun for send mail
     // -----------------------PASSWORD EMAIL MODEL----------------------//
-    public function send_Email($email_id, $password, $company_name) {
+    public function send_Email($email_id, $password, $company_name, $username) {
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'mx1.hostinger.in',
@@ -152,7 +152,7 @@ class Employee_model extends CI_Model {
         $this->email->set_newline("\r\n");
         $this->email->from('customercare@bizmo-tech.com', "Admin Team");
         $this->email->to($email_id);
-        $this->email->subject("Password Request - MIS Product");
+        $this->email->subject("Password For - MIS Product");
         $this->email->message('<html>
         <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -162,7 +162,7 @@ class Employee_model extends CI_Model {
         <h2 style="color:blue; font-size:25px">Credentials for MIS Product!</h2>
         <h3 style="font-size:15px;">Hello User,<br></h3>
         <h3 style="font-size:15px;">The Following are the username and password for <u>MIS Product</u>.</h3>
-        <h3 style="font-size:15px;">Username: ' . $email_id . '</h3>
+        <h3 style="font-size:15px;">Username: ' . $email_id . ' OR '.$username.'</h3>
         <h3 style="font-size:15px;">Password: ' . $password . '</h3>
         <h3 style="font-size:15px;">Role: Employee</h3>
         <h3 style="font-size:15px;">Company Name: ' . $company_name . '</h3>

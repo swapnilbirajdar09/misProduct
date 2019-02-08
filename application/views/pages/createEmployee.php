@@ -75,7 +75,7 @@ $role_name = $Arr[1];
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 w3-margin-bottom" style=" width: 100%;">
-                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Company Name: </label>
                                 <input type="text" name="company_name" readonly id="company_name" autocomplete="off" value="<?php echo $company_name; ?>" class="w3-input w3-small" placeholder="Enter Number here" required>
                             </div>
@@ -100,7 +100,7 @@ $role_name = $Arr[1];
 
     <!-- view all document div -->
     <div class="row" ng-app="employeeApp" ng-controller="employeeController">
-        <div id="message"></div>
+        <div ng-bind-html="message"></div>
 
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -173,8 +173,8 @@ $role_name = $Arr[1];
                         setTimeout(function () {
                             $('#createEmployee_form').trigger("reset");
                             $('.alert').fadeOut('fast');
-                            //window.location.reload();
-                        }, 5000); // <-- time in milliseconds 
+                            window.location.reload();
+                        }, 8000); // <-- time in milliseconds 
                         break;
 
                     case 'error':
@@ -217,7 +217,7 @@ $role_name = $Arr[1];
     var app = angular.module("employeeApp", ['ngSanitize']);
     app.controller("employeeController", function ($scope, $http, $window) {
 //------------------------------------------------------------------------------------------------------//
-        //$scope.profiles = [];
+        $scope.message = '';
 
         $http.get(BASE_URL + "employee/getAllEmployee").then(function (response) {
             console.log(response.data);
@@ -228,13 +228,12 @@ $role_name = $Arr[1];
                 //alert(data['status_message'].length);
                 for (i = 0; i < data['status_message'].length; i++) {
                     //alert(data['status_message'][i].company_name);
-                    if(data['status_message'][i].phone == ''){
+                    if (data['status_message'][i].phone == '') {
                         phone = 'N/A';
-                    }else{
+                    } else {
                         phone = data['status_message'][i].phone;
                     }
-                    
-                    
+
                     $scope.profiles.push({'company_name': data['status_message'][i].name,
                         'user_id': data['status_message'][i].user_id,
                         'role': data['status_message'][i].role_name,
@@ -259,21 +258,21 @@ $role_name = $Arr[1];
                 if (data['status'] == 200) {
                     //alert(data['status_message'].length);
                     for (i = 0; i < data['status_message'].length; i++) {
-                        if(data['status_message'][i].phone == ''){
-                        phone = 'N/A';
-                    }else{
-                        phone = data['status_message'][i].phone;
-                    }
-                                        
-                    $scope.profiles.push({'company_name': data['status_message'][i].name,
-                        'user_id': data['status_message'][i].user_id,
-                        'role': data['status_message'][i].role_name,
-                        'username': data['status_message'][i].user_name,
-                        'email': data['status_message'][i].user_email,
-                        'phone_no': phone,
-                        'salary': data['status_message'][i].salary
-                    });
-                    //console.log($scope.profiles);
+                        if (data['status_message'][i].phone == '') {
+                            phone = 'N/A';
+                        } else {
+                            phone = data['status_message'][i].phone;
+                        }
+
+                        $scope.profiles.push({'company_name': data['status_message'][i].name,
+                            'user_id': data['status_message'][i].user_id,
+                            'role': data['status_message'][i].role_name,
+                            'username': data['status_message'][i].user_name,
+                            'email': data['status_message'][i].user_email,
+                            'phone_no': phone,
+                            'salary': data['status_message'][i].salary
+                        });
+                        //console.log($scope.profiles);
                     }
                 } else {
                     $scope.profiles = 500;
@@ -293,13 +292,22 @@ $role_name = $Arr[1];
                             method: 'get',
                             url: BASE_URL + "employee/deleteUser?user_id=" + user_id
                         }).then(function successCallback(data) {
-                            //alert(response.data);
+                            alert(data);
+                            console.log(data.status);
                             switch (data.status) {
-                                case 'success':
-                                    $('#message').html(data.message);
-                                    break;
-                                case 'error':
-                                    $('#message').html(data.message);
+                                case 200:
+                                    //alert('check1');
+                                    $scope.message = '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success!</strong> Employee Removed successfully.</div>';
+                                    setTimeout(function () {
+                                        $('.alert_message').fadeOut('fast');
+                                        window.location.reload();
+                                    }, 8000); // <-- time in milliseconds                                    break;
+                                case 500:
+                                    //alert('check2');
+                                    $scope.message = '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Failure!</strong> Employee Not Removed Successfully.</div>';
+                                    setTimeout(function () {
+                                        $('.alert_message').fadeOut('fast');
+                                    }, 8000);
                                     break;
                                 default:
                                     $('#message').html('<div class="alert alert-danger alert-dismissible" style="margin-bottom:5px"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong><b>Error:</b> Something went wrong! Try refreshing page and Save again.!</strong></div>');

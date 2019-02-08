@@ -144,10 +144,10 @@ class Employee extends CI_Controller {
 //close cURL resource
         curl_close($ch);
         $response = json_decode($output, true);
-        //print_r($output);die();
-        if ($response['status'] == 'success') {
+        ///print_r($output);die();
+        if ($response['status'] == 200) {
             $response = array(
-                'status' => 'success',
+                'status' => 200,
                 'message' => '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong>Success!</strong> Employee Removed successfully.
@@ -157,13 +157,13 @@ class Employee extends CI_Controller {
 			$(".alert").fadeTo(500, 0).slideUp(500, function(){
 			$(this).remove(); 
 			});
-			location.reload();
+			//location.reload();
 			}, 1000);
 			</script>'
             );
         } else {
             $response = array(
-                'status' => 'error',
+                'status' => 500,
                 'message' => '<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong>Failure!</strong> Employee Not Removed Successfully.
