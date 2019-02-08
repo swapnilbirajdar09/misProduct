@@ -7,8 +7,8 @@ class Assignemployee_model extends CI_Model {
     }
 
 // fun for get all Projects
-    public function getAllProjects($user_id) {
-        $query = "SELECT * FROM project_tab WHERE user_id='$user_id'";
+    public function getAllProjects($company_id) {
+        $query = "SELECT * FROM project_tab WHERE company_id='$company_id'";
         $result = $this->db->query($query);
         if ($result->num_rows() <= 0) {
             $response = array(

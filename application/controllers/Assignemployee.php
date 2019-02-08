@@ -28,19 +28,19 @@ class Assignemployee extends CI_Controller {
     }
 
     public function getAllEmployee() {
-        $user_id = $this->session->userdata('user_id');
+        $company_id = $this->session->userdata('company_id');
 
         $path = base_url();
-        $url = $path . 'api/admin/Employee_api/getAllEmployee?user_id=' . $user_id;
+        $url = $path . 'api/admin/Employee_api/getAllEmployee?company_id=' . $company_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-// authenticate API
+        // authenticate API
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
         curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPGET, 1);
         $output = curl_exec($ch);
-//close cURL resource
+        //close cURL resource
         curl_close($ch);
         $response = json_decode($output, true);
         //echo $output;
@@ -48,19 +48,19 @@ class Assignemployee extends CI_Controller {
     }
 
     public function getAllProjects() {
-        $user_id = $this->session->userdata('user_id');
+        $company_id = $this->session->userdata('company_id');
 
         $path = base_url();
-        $url = $path . 'api/admin/Assignemployee_api/getAllProjects?user_id=' . $user_id;
+        $url = $path . 'api/admin/Assignemployee_api/getAllProjects?company_id=' . $company_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-// authenticate API
+        // authenticate API
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
         curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPGET, 1);
         $output = curl_exec($ch);
-//close cURL resource
+        //close cURL resource
         curl_close($ch);
         $response = json_decode($output, true);
         //echo $output;
@@ -69,25 +69,22 @@ class Assignemployee extends CI_Controller {
 
     // fin for get employee details
     public function getEmployeeDetails(){
-        extract($_POST);
-        
+        extract($_POST);        
         $path = base_url();
         $url = $path . 'api/admin/Assignemployee_api/getEmployeeDetails?user_id=' . $emp_user_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-// authenticate API
+        // authenticate API
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
         curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPGET, 1);
         $output = curl_exec($ch);
-//close cURL resource
+        //close cURL resource
         curl_close($ch);
         $response = json_decode($output, true);
         //echo $output;
-        print_r($response);
-        
-        
+        print_r($response);               
     }
 
 

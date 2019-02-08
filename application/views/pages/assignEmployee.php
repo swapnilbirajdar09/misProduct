@@ -25,7 +25,7 @@
                 <div id="response_msg"></div>
                 <div class="container x_content">
                     <?php
-                    //print_r($projects);
+                    //print_r($employees);
                     ?>
                     <form id="assignEmployeeForm" name="assignEmployeeForm" method="post">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                           
@@ -47,7 +47,7 @@
                                     <?php
                                     foreach ($employees['status_message'] as $key) {
                                         ?>
-                                        <option value="<?php echo $key['user_id']; ?>"><?php echo $key['username']; ?></option>
+                                        <option value="<?php echo $key['user_id']; ?>"><?php echo $key['user_name']; ?></option>
                                     <?php } ?>                      
                                 </select>
                             </div>
@@ -64,7 +64,7 @@
                                     <input type="number" name="salary" id="salary" autocomplete="off" step="0.01" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
                                 </div>                            
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 w3-margin-bottom" style=" width: 100%;">
+<!--                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 w3-margin-bottom" style=" width: 100%;">
                                 <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                     <label>Cost Per Day: <font color ="red"><span id ="pname_star">*</span></font></label>
                                     <input type="number" name="salary" id="salary" autocomplete="off" step="0.01" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
@@ -73,7 +73,7 @@
                                     <label>Total <span class="w3-tiny"></span>: <font color ="red"><span id ="pname_star">*</span></font></label>
                                     <input type="number" name="salary" id="salary" autocomplete="off" step="0.01" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
                                 </div>                            
-                            </div>
+                            </div>-->
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 w3-center w3-margin-top" style=" width: 100%;">
                                 <button type="submit" id="assignEmp" class="btn theme_bg w3-hover-text-white">Submit</button>                      
                                 <button type="reset" id="clear" class="btn btn-success">Clear</button>                      
@@ -90,25 +90,22 @@
     function showEmployeeDetailsDiv() {
         $("#employeeDetails").css("display", "block");
         var emp_user_id = $('#employees').val();
-       // var project_id = $('#projects').val();
+        var project_id = $('#projects').val();
         $.ajax({
             type: "POST",
             url: BASE_URL + "assignemployee/getEmployeeDetails",
             data: {
-                emp_user_id: emp_user_id
+                emp_user_id: emp_user_id,
+                project_id: project_id
             },
             return: false,
-            beforeSend: function () {
-                $('.comment_msg').html('');
-                // $('#commentBtn').prop('disabled', true);
-            },
             success: function (response) {
-                alert(response);
-                console.log(response);  
-                
+               // alert(response);
+                console.log(response);
+
                 $('#salary').val();
-                
-            }            
+
+            }
         });
     }
 
