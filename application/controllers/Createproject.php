@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Createproject extends CI_Controller {
@@ -24,16 +25,12 @@ class Createproject extends CI_Controller {
     }
 
     public function create_project() {
-        $user_name = $this->session->userdata('session_name');
-        $role = $this->session->userdata('role');
-        $user_id = $this->session->userdata('user_id');
-        $email = $this->session->userdata('email');
+        $company_id = $this->session->userdata('company_id');
 
         extract($_POST);
         $data = $_POST;
         //print_r($data);die();
-        $data['user_id'] = $user_id;
-        $data['user_name'] = $user_name;
+        $data['company_id'] = $company_id;
         $path = base_url();
         $url = $path . 'api/admin/Createproject_api/create_project';
         $ch = curl_init($url);

@@ -7,16 +7,16 @@ class Createproject_model extends CI_Model {
     }
 // fun for create project 
     public function create_project($data) {
-        extract($data);    
+        extract($data); 
+        //print_r($data);die();
         $result = array(
-            'user_id' => $user_id,
+            'company_id' => $company_id,
             'project_name' => addslashes($project_title),
             'project_description' => addslashes($project_description),
             'start_date' => $start_date,
             'end_date' => $end_date,
             'project_cost' => $project_cost,
             'profit_margin' => $project_profit_margin,
-            'created_by' => $user_name,
             'created_date' => date('Y-m-d'),
             'status' => '1'            
         );

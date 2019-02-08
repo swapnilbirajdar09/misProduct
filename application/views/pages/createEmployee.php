@@ -1,3 +1,11 @@
+<?php
+$role = $this->session->userdata('role');
+$Arr = explode('/', $role);
+$role_id = $Arr[0];
+$role_name = $Arr[1];
+?>
+
+
 <style>
     input{
         width: 100%;
@@ -26,29 +34,33 @@
 
                 <div class="container x_content">
                     <form id="createEmployee_form" name="createEmployee_form" method="post">
-<!--                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
                             <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                <label>Gender: </label>
-                                <span class="hidden-xs"> 
-                                    <input type="radio" name="gender" value="Male" class="w3-radio w3-small" required> Male</span>
-                                <span class="hidden-xs"> 
-                                    <input type="radio" name="gender"  value="Female" class="w3-radio w3-small" required> Female</span>
-                                <div class="w3-col l12 hidden-sm hidden-lg hidden-md">
-                                    <span> <input type="radio" name="gender" value="Male" class="w3-radio" required> Male</span>
-                                    <span> <input type="radio" name="gender" value="Female" class="w3-radio" style="margin-left: 15px" required> Female</span>
-                                </div>
+                                <label>Roles: <font color ="red"><span id ="pname_star">*</span></font></label>
+                                <select class="w3-input w3-text-grey" name="role" id="role" required>
+                                    <option value="0" class="w3-light-grey" selected>Select Role*</option>
+                                    <?php
+                                    foreach ($roles['status_message'] as $key) {
+                                        if ($key['role_id'] > 2) {
+                                            ?>
+                                            <option value="<?php echo $key['role_id'] . '/' . $key['role_name']; ?>"><?php echo $key['role_name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>                      
+                                </select>
                             </div>
-                        </div>-->
+                        </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
                             <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Email-Id: </label>
                                 <input type="email" name="eMail" id="eMail" autocomplete="off" value="" class="w3-input w3-small" placeholder="Enter email here" required >
                             </div>
-<!--                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                <label>Phone Number: </label>
-                                <input type="number" name="ph_number" id="ph_number" autocomplete="off" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
-                            </div>-->
+                            <!--                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
+                                                            <label>Phone Number: </label>
+                                                            <input type="number" name="ph_number" id="ph_number" autocomplete="off" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
+                                                        </div>-->
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
@@ -99,7 +111,7 @@
                     </ul>
                     <div class="clearfix"></div>
                 </div>
-                <?php //print_r($allDocuments); ?>
+                <?php //print_r($allDocuments);  ?>
                 <div class="container x_content">
 
                     <div class=" col-md-12 col-sm-12 col-xs-12 w3-margin-top ">   
@@ -178,7 +190,7 @@
                             $('.alert').fadeOut('fast');
                         }, 8000); // <-- time in milliseconds
                         break;
-                        
+
                     default:
                         $('#response_msg').html('<div class="alert alert-danger alert-dismissible fade in alert-fixed w3-round"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Fatal Error-</strong> Something went wrong. Please Logout your account and Try Logging in again.</div>');
                         setTimeout(function () {
@@ -208,19 +220,27 @@
         //$scope.profiles = [];
 
         $http.get(BASE_URL + "employee/getAllEmployee").then(function (response) {
+            console.log(response.data);
             var data = response.data;
             $scope.profiles = [];
-            var i, j, user_photos, profile_image, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
+            var i, j, user_photos, phone, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
             if (data['status'] == 200) {
                 //alert(data['status_message'].length);
                 for (i = 0; i < data['status_message'].length; i++) {
                     //alert(data['status_message'][i].company_name);
-                    $scope.profiles.push({'company_name': data['status_message'][i].company_name,
+                    if(data['status_message'][i].phone == ''){
+                        phone = 'N/A';
+                    }else{
+                        phone = data['status_message'][i].phone;
+                    }
+                    
+                    
+                    $scope.profiles.push({'company_name': data['status_message'][i].name,
                         'user_id': data['status_message'][i].user_id,
-                        'role': data['status_message'][i].role,
-                        'username': data['status_message'][i].username,
-                        'email': data['status_message'][i].email,
-                        'phone_no': data['status_message'][i].phone_no,
+                        'role': data['status_message'][i].role_name,
+                        'username': data['status_message'][i].user_name,
+                        'email': data['status_message'][i].user_email,
+                        'phone_no': phone,
                         'salary': data['status_message'][i].salary
                     });
                     //console.log($scope.profiles);
@@ -235,20 +255,25 @@
             $http.get(BASE_URL + "employee/getAllEmployee").then(function (response) {
                 var data = response.data;
                 $scope.profiles = [];
-                var i, j, user_photos, profile_image, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
+                var i, j, user_photos, phone, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
                 if (data['status'] == 200) {
                     //alert(data['status_message'].length);
                     for (i = 0; i < data['status_message'].length; i++) {
-                        //alert(data['status_message'][i].company_name);
-                        $scope.profiles.push({'company_name': data['status_message'][i].company_name,
-                            'user_id': data['status_message'][i].user_id,
-                            'role': data['status_message'][i].role,
-                            'username': data['status_message'][i].username,
-                            'email': data['status_message'][i].email,
-                            'phone_no': data['status_message'][i].phone_no,
-                            'salary': data['status_message'][i].salary
-                        });
-                        //console.log($scope.profiles);
+                        if(data['status_message'][i].phone == ''){
+                        phone = 'N/A';
+                    }else{
+                        phone = data['status_message'][i].phone;
+                    }
+                                        
+                    $scope.profiles.push({'company_name': data['status_message'][i].name,
+                        'user_id': data['status_message'][i].user_id,
+                        'role': data['status_message'][i].role_name,
+                        'username': data['status_message'][i].user_name,
+                        'email': data['status_message'][i].user_email,
+                        'phone_no': phone,
+                        'salary': data['status_message'][i].salary
+                    });
+                    //console.log($scope.profiles);
                     }
                 } else {
                     $scope.profiles = 500;

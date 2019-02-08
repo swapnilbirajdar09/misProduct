@@ -7,8 +7,8 @@ class Employee_model extends CI_Model {
     }
 
 // fun for get company name
-    public function getCompanyName($user_id) {
-        $query = "SELECT company_name FROM user_tab WHERE user_id='$user_id'";
+    public function getCompanyName($company_id) {
+        $query = "SELECT name FROM company_tab WHERE company_id='$company_id'";
         //echo $query;        die();
         $result = $this->db->query($query);
         //$response = '';
@@ -17,27 +17,20 @@ class Employee_model extends CI_Model {
         } else {
             foreach ($result->result_array() as $row) {
                 //print_r($row);die();
-                $response = $row['company_name'];
+                $response = $row['name'];
             }
         }
         return $response;
     }
 
 // fun for get all employee
-    public function getAllEmployee($user_id) {
-        $query = "SELECT company_name FROM user_tab WHERE user_id='$user_id'";
-        $resultSel = $this->db->query($query);
-        $company_name = '';
-        if ($resultSel->num_rows() <= 0) {
-            $response = 500;
-        } else {
-            foreach ($resultSel->result_array() as $row) {
-                $company_name = $row['company_name'];
-            }
-        }
-
-        $sql = "SELECT * FROM user_tab WHERE company_name = '$company_name' AND role = 'Employee'";
-
+    public function getAllEmployee($company_id) {
+        $sql = "SELECT * FROM user_tab as us JOIN role_tab as ro "
+                . "JOIN userdetails_tab as ut "
+                . "JOIN company_tab as co "
+                . "ON (us.user_id = ut.user_id) AND (ut.company_id = co.company_id) "
+                . "AND (ro.role_id = us.role_id) "
+                . "WHERE co.company_id = '$company_id' AND ro.role_name = 'Employee'";
         $result = $this->db->query($sql);
         if ($result->num_rows() <= 0) {
             $response = array(
@@ -70,30 +63,44 @@ class Employee_model extends CI_Model {
     // --------------function to register user
     public function create_employee($data) {
         extract($data);
-        $email_exist = Employee_model::checkEmailExist($eMail);
-        if ($email_exist == '0') {
-            $result = array(
-                'gender' => $gender,
-                'email' => $eMail,
-                'username' => $username,
-                'password' => base64_encode($password),
-                'registered_date' => date('Y-m-d'),
-                'status' => '1',
-                'company_name' => addslashes($company_name),
-                'role' => 'Employee',
-                'phone_no' => $ph_number,
-                'salary' => $salary
-            );
 
+        $Arr = explode('/', $role);
+        $role_id = $Arr[0];
+        $role_name = $Arr[1];
+
+        $query = "SELECT name FROM company_tab WHERE company_id='$company_id'";
+        $resultSel = $this->db->query($query);
+        $company_name = '';
+        foreach ($resultSel->result_array() as $row) {
+            $company_name = $row['name'];
+        }
+
+        $email_exist = Employee_model::checkEmailExist($eMail, $username);
+        if ($email_exist == '0') {
+
+            $result = array(
+                'role_id' => $role_id,
+                'user_email' => $eMail,
+                'user_name' => $username,
+                'password' => base64_encode($password),
+                'created_date' => date('Y-m-d'),
+                'status' => '1',
+                'role' => $role_name,
+            );
+            // insert data to the user tab
             $this->db->insert('user_tab', $result);
 
-            $insert_id = $this->db->insert_id();
-            //$profile_key = substr(base64_encode($insert_id), 0, 4);
+            $user_table_id = $this->db->insert_id();
 
+            //$profile_key = substr(base64_encode($insert_id), 0, 4);
+            $costPerDay = $salary / 30;
             $profile_tab = array(
-                'user_id' => $insert_id
+                'user_id' => $user_table_id,
+                'company_id' => $company_id,
+                'salary' => $salary,
+                'cost_per_day' => $costPerDay
             );
-            $this->db->insert('profile_tab', $profile_tab);
+            $this->db->insert('userdetails_tab', $profile_tab);
             $sendEmail = Employee_model::send_Email($eMail, $password, $company_name);
             //print_r($sendEmail);die();
             if ($sendEmail['status'] == 200) {
@@ -111,11 +118,12 @@ class Employee_model extends CI_Model {
     }
 
     // check email id exist or not
-    public function checkEmailExist($email_id) {
+    public function checkEmailExist($email_id, $username) {
         $query = null;
         // ------------ check email exist 
         $query = $this->db->get_where('user_tab', array(//making selection
-            'email' => $email_id
+            'user_email' => $email_id,
+            'user_name' => $username
         ));
 
         if ($query->num_rows() <= 0) {

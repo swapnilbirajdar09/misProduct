@@ -100,8 +100,8 @@ class Register_company extends CI_Controller {
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
-        echo $response_json;
-        die();
+//        echo $response_json;
+//        die();
 
         if ($response == '200') {
             echo '<div class="alert alert-success alert-dismissible fade in alert-fixed w3-round">
