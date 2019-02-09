@@ -22,7 +22,7 @@
                 <div class="container x_content">
                     <div class="w3-col l12">
                         <!-- div for update email id -->
-                        <div class="col-lg-6 w3-padding-small ">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 w3-padding-small ">
                             <div class="w3-col l12 w3-small w3-round w3-margin-bottom w3-border w3-padding-medium">
                                 <label><i class="fa fa-inr"></i> Fixed Cost</label><br>
                                 <form id="updateFixedCost">
@@ -47,34 +47,30 @@
                                 </form>
                             </div>
                         </div>
-
-                        <!-- div for update user name -->
-                        <!--                        <div class="col-lg-6 w3-padding-small w3-small w3-margin-bottom">
-                                                    <div class="w3-col l12 w3-small w3-round w3-margin-bottom w3-border w3-padding-small">
-                                                        <label><i class="fa fa-users"></i> Update Username</label><br>
-                                                        <form id="updateUname">
-                                                            <div class="w3-col l8 w3-padding-right w3-margin-bottom">
-                                                                <input type="text" name="admin_uname" value="" placeholder="Enter Username Here..." id="admin_uname" class="w3-input" required>
-                                                            </div>
-                                                            <div class="w3-col l4">
-                                                                <button type="submit" class="w3-button w3-red">Update Username</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                        
-                                                    <div class="w3-col l12 w3-round w3-margin-bottom w3-border w3-padding-small">
-                                                        <label><i class="fa fa-lock"></i> Update Password</label><br>
-                        
-                                                        <form id="updatePass">
-                                                            <div class="w3-col l8 w3-padding-right w3-margin-bottom">
-                                                                <input type="text" name="admin_pass" value="" placeholder="Enter Password here..." id="admin_email" class="w3-input" required>
-                                                            </div>
-                                                            <div class="w3-col l4">
-                                                                <button type="submit" class="w3-button w3-red">Update Password</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>-->
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="w3-card w3-padding" id="skill" ng-app="skillApp" ng-controller="skillController">
+                                <label for="skill"><i class="fa fa-database"></i> Add Skill:</label>
+                                <div class="w3-container w3-white">
+                                    <div class="w3-row w3-margin-top">
+                                        <form ng-submit="submit()" method="POST">
+                                            <div class="w3-col l10 s10">
+                                                <input type="text" ng-model="skillname" class="form-control w3-small"  required>
+                                            </div>
+                                            <div class="w3-col l2 s2"> 
+                                                <button class="btn btn-primary theme_bg btn-block" type="submit"><i class="fa fa-plus "></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="row w3-padding" style="height:250px; overflow: auto;">
+                                        <div class="col-lg-12 col-xs-12 col-md-12 w3-padding" ng-repeat='skill in skills'>
+                                            <span>{{skill.skill_name}} </span>
+                                            <a type="btn" ng-click="delskill(skill.skill_id)" class="w3-right" ><i class="fa fa-times w3-text-black"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,7 +79,52 @@
         <!-- view all document div ends -->
     </div>
 </div>
+<script>
+    var skill = angular.module('skillApp', ['ngSanitize']);
+    skill.controller('skillController', function ($scope, $http) {
+        $scope.submit = function () {           // POST form data to controller
+            $http({
+                method: 'POST',
+                url: '<?php echo base_url(); ?>settings/settings/addskills',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify({skillname: $scope.skillname})
+            }).then(function (data) {
+                // alert(data);
+                //console.log(data);
+                $scope.skillname = '';
+                $scope.getSkills();
+            });
+        };
+        //---------show all skill
+        $scope.getSkills = function () {
+            $http({
+                method: 'get',
+                url: '<?php echo base_url(); ?>admin/products/addproduct/getAllSkills'
+            }).then(function successCallback(response) {
+                // Assign response to skills object
+                // console.log(response);
+                $scope.skills = response.data;
+                // $scope.mes=response;
+            });
+        };
+        $scope.getSkills();
+        //---del skill
+        $scope.delskill = function (skillid) {
 
+            $http({
+                method: 'get',
+                url: '<?php base_url(); ?>settings/delSkill?skillid=' + skillid
+            }).then(function successCallback(response) {
+                // alert(response);
+                // Assign response to skills object
+                console.log(response);
+                //$scope.skills = response.data;
+                $scope.getSkills();
+            });
+        };
+    });
+    //angular.bootstrap(document.getElementById("skill"), ['skillApp']);
+</script>
 <script>
     $(function () {
         $("#updateFixedCost").submit(function () {

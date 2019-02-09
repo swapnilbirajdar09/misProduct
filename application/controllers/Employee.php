@@ -7,7 +7,7 @@ class Employee extends CI_Controller {
     // Login controller
     public function __construct() {
         parent::__construct();
-    // load common model
+        // load common model
         $this->load->model('Login_model');
     }
 
@@ -16,7 +16,7 @@ class Employee extends CI_Controller {
         //start session     
         $admin_name = $this->session->userdata('session_name');
         if ($admin_name == '') {
-        //check session variable set or not, otherwise logout
+            //check session variable set or not, otherwise logout
             redirect('login');
         }
         $data['company_name'] = Employee::getCompanyName();
@@ -105,7 +105,7 @@ class Employee extends CI_Controller {
         curl_close($ch);
         $response = json_decode($response_json, true);
 //        echo $response_json;
-//       die();
+//        die();
         if ($response == '200') {
             $response = array(
                 'status' => 'success',
@@ -118,6 +118,8 @@ class Employee extends CI_Controller {
                 'status' => 'error',
                 'message' => '<div class="alert alert-danger alert-dismissible fade in alert-fixed"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Error-</strong> Email Id Is Already Exist.</div>'
             );
+            echo json_encode($response);
+            die();
         } else {
             $response = array(
                 'status' => 'error',
@@ -135,13 +137,13 @@ class Employee extends CI_Controller {
         $url = $path . 'api/admin/Employee_api/deleteUser?user_id=' . $user_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-// authenticate API
+        // authenticate API
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
         curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPGET, 1);
         $output = curl_exec($ch);
-//close cURL resource
+        //close cURL resource
         curl_close($ch);
         $response = json_decode($output, true);
         ///print_r($output);die();
@@ -157,7 +159,7 @@ class Employee extends CI_Controller {
 			$(".alert").fadeTo(500, 0).slideUp(500, function(){
 			$(this).remove(); 
 			});
-			//location.reload();
+			location.reload();
 			}, 1000);
 			</script>'
             );

@@ -1,3 +1,6 @@
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/build/css/bootstrap-multiselect.css" type="text/css">
+<script type="text/javascript" src="<?php ?>assets/js/bootstrap-multiselect.js"></script>
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left w3-col l12">
@@ -56,6 +59,14 @@
                             </div>
 
                         </div>
+                        <div class="w3-col l12">
+                            <div class=" col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
+                                <label>Project Description: <font color ="red"><span id ="pname_star">*</span></font></label><br>
+                                <select id="demo" class="w3-input" multiple="multiple">  
+                                    <option value="Javascript">Javascript</option> 
+                                </select>
+                            </div> 
+                        </div>
                         <div class="col-md-12 col-sm-12 col-xs-12 w3-center w3-margin-top w3-margin-bottom">
                             <button type="submit" id="uploadDocBtn" class="btn theme_bg w3-hover-text-white btn-large"><i class="fa fa-briefcase"></i> Create Project</button>
                             <button type="reset" id="clear" class="btn btn-success">Clear</button>                      
@@ -105,7 +116,9 @@
     </div>
 </div>
 <script>
-    // fun for create project
+    $(document).ready(function () {
+        $('#demo').multiselect();
+    });    // fun for create project
     $("#createProject_form").on('submit', function (e) {
         e.preventDefault();
         dataString = $("#createProject_form").serialize();

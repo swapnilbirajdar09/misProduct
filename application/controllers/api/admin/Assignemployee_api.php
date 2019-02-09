@@ -14,7 +14,7 @@ class Assignemployee_api extends REST_Controller {
 // fun for get Company name
     public function getAllProjects_get() {
         extract($_GET);
-        $result = $this->Assignemployee_model->getAllProjects($company_id);
+        $result = $this->Assignemployee_model->getAllProjects($company_id,$role_id);
         return $this->response($result);
     }
     
@@ -23,4 +23,12 @@ class Assignemployee_api extends REST_Controller {
         $result = $this->Assignemployee_model->getEmployeeDetails($user_id);
         return $this->response($result);
     }
+    
+    public function assignEmployeeToProject_post(){
+        extract($_POST);
+        $data = $_POST;
+        $result = $this->Assignemployee_model->assignEmployeeToProject($data);
+        return $this->response($result);
+    }
+    
 }
