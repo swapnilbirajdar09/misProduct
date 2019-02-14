@@ -53,19 +53,21 @@
                                 <label>Project Cost: <font color ="red"><span id ="pname_star">*</span></font></label>
                                 <input type="number" step="0.01" class="w3-input" name="project_cost" id="project_cost" placeholder="Enter Project Cost" required>
                             </div>
+                            <?php //print_r($skills);?>
+                            <div class=" col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
+                                <label>Project Skills: <font color ="red"><span id ="pname_star">*</span></font></label><br>
+                                <select id="demo" name="skills[]" class=" form-control" multiple="multiple" style=" width: 100%;">
+                                    <?php foreach($skills['status_message'] as $key) { ?>
+                                    <option value="<?php echo $key['skill_id']; ?>"><?php echo $key['skill_name']; ?></option> 
+                                    <?php } ?>
+                                </select>
+                            </div> 
+                        </div>
+                        <div class="w3-col l12">
                             <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Project Description: <font color ="red"><span id ="pname_star">*</span></font></label>
                                 <textarea class="w3-input" name="project_description" id="project_description" rows="5" placeholder="Enter Project Description" style=" resize: none;" required></textarea>
-                            </div>
-
-                        </div>
-                        <div class="w3-col l12">
-                            <div class=" col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                <label>Project Description: <font color ="red"><span id ="pname_star">*</span></font></label><br>
-                                <select id="demo" class="w3-input" multiple="multiple">  
-                                    <option value="Javascript">Javascript</option> 
-                                </select>
-                            </div> 
+                            </div>                          
                         </div>
                         <div class="col-md-12 col-sm-12 col-xs-12 w3-center w3-margin-top w3-margin-bottom">
                             <button type="submit" id="uploadDocBtn" class="btn theme_bg w3-hover-text-white btn-large"><i class="fa fa-briefcase"></i> Create Project</button>
@@ -75,44 +77,6 @@
                 </div>
             </div>
         </div>
-        <!-- upload document div ends -->
-
-        <!-- view all document div -->
-        <!--            <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2><i class="fa fa-list"></i> All Projects</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-        <?php //print_r($allDocuments); ?>
-                            <div class="container x_content">
-                                <div id="table_msg"></div>
-                                <div class="w3-col l12 w3-padding w3-small" id="allDocumentDiv">
-                                    <table id="datatable" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr >
-                                                <th class="text-center">Project Title</th>
-                                                <th class="text-center">Type</th>
-                                                <th class="text-center">Revision No</th>
-                                                <th class="text-center">Total Files</th>
-                                                <th class="text-center">Uploaded by</th>
-                                                <th class="text-center">Uploaded date</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-        
-                        </div>
-                    </div>-->
-        <!-- view all document div ends -->
     </div>
 </div>
 <script>
@@ -134,9 +98,10 @@
                 $('#updateDocBtn').html('<i class="fa fa-circle-o-notch fa-spin"></i> Creating Project');
             },
             success: function (response) {
+                console.log(response);
                 $('#updateDocBtn').prop('disabled', false);
                 $('#updateDocBtn').html('<i class="fa fa-briefcase"></i> Create Project');
-                console.log(response);
+                //console.log(response);
                 var data = JSON.parse(response);
 
                 //alert(data);
