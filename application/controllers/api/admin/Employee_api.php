@@ -30,6 +30,12 @@ class Employee_api extends REST_Controller {
         $result = $this->Employee_model->getAllEmployee($company_id);
         return $this->response($result);
     }
+    // fun for get all employee details
+    public function getAllEmployeeInfo_get(){
+        extract($_GET);
+        $result = $this->Employee_model->getAllEmployeeInfo($company_id);
+        return $this->response($result);
+    }
     // fun for delete user 
     public function deleteUser_get() {
         extract($_GET);

@@ -44,6 +44,59 @@ class Employee_model extends CI_Model {
         return $response;
     }
 
+// fun for get all employee details
+    public function getAllEmployeeInfo($company_id) {
+        $sql = "SELECT * FROM user_tab as us JOIN role_tab as ro "
+                . "JOIN userdetails_tab as ut "
+                . "JOIN company_tab as co "
+                . "ON (us.user_id = ut.user_id) AND (ut.company_id = co.company_id) "
+                . "AND (ro.role_id = us.role_id) "
+                . "WHERE co.company_id = '$company_id' AND ro.role_name = 'Employee'";
+        $result = $this->db->query($sql);
+        $emp_skills = array();
+        $skill = '';
+        $skills = '';
+        $user_id = '';
+        $email = '';
+        $role = '';
+        $phone_no = '';
+        $salary = '';
+        $username = '';
+        if ($result->num_rows() <= 0) {
+            $response = array(
+                'status' => 500,
+                'status_message' => 'No data found.');
+        } else {
+
+            foreach ($result->result_array() as $row) {
+                $skills = json_decode($row['skills'], true);
+                foreach ($skills as $sk) {
+                    $sqlSelect = "SELECT Skill_name FROM skill_tab WHERE skill_id = '$sk'";
+                    $result = $this->db->query($sqlSelect);
+                    $emp_skills[] = $result->result_array();
+                }
+                $skill = $emp_skills;
+                $user_id = $row['user_id'];
+                $role = $row['role_name'];
+                $email = $row['user_email'];
+                $phone_no = $row['phone_no'];
+                $salary = $row['salary'];
+                $username = $row['user_name'];
+            }
+
+            $response = array(
+                'status' => 200,
+                'skill' => $skill,
+                '$user_id' => $user_id,
+                'role' => $role,
+                'email' => $email,
+                'phone_no' => $phone_no,
+                'salary' => $salary,
+                'username' => $username);
+        }
+        return $response;
+    }
+
 // fun for delete employee details
     public function deleteUser($user_id) {
         $sql = "DELETE FROM user_tab WHERE user_id = '$user_id'";
@@ -98,7 +151,8 @@ class Employee_model extends CI_Model {
                 'user_id' => $user_table_id,
                 'company_id' => $company_id,
                 'salary' => $salary,
-                'cost_per_day' => $costPerDay
+                'cost_per_day' => $costPerDay,
+                'skills' => $skills
             );
             $this->db->insert('userdetails_tab', $profile_tab);
             $sendEmail = Employee_model::send_Email($eMail, $password, $company_name, $username);
@@ -162,7 +216,7 @@ class Employee_model extends CI_Model {
         <h2 style="color:blue; font-size:25px">Credentials for MIS Product!</h2>
         <h3 style="font-size:15px;">Hello User,<br></h3>
         <h3 style="font-size:15px;">The Following are the username and password for <u>MIS Product</u>.</h3>
-        <h3 style="font-size:15px;">Username: ' . $email_id . ' OR '.$username.'</h3>
+        <h3 style="font-size:15px;">Username: ' . $email_id . ' OR ' . $username . '</h3>
         <h3 style="font-size:15px;">Password: ' . $password . '</h3>
         <h3 style="font-size:15px;">Role: Employee</h3>
         <h3 style="font-size:15px;">Company Name: ' . $company_name . '</h3>

@@ -4,8 +4,8 @@ $Arr = explode('/', $role);
 $role_id = $Arr[0];
 $role_name = $Arr[1];
 ?>
-
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/build/css/bootstrap-multiselect.css" type="text/css">
+<script type="text/javascript" src="<?php ?>assets/js/bootstrap-multiselect.js"></script>
 <style>
     input{
         width: 100%;
@@ -57,10 +57,14 @@ $role_name = $Arr[1];
                                 <label>Email-Id: </label>
                                 <input type="email" name="eMail" id="eMail" autocomplete="off" value="" class="w3-input w3-small" placeholder="Enter email here" required >
                             </div>
-                            <!--                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
-                                                            <label>Phone Number: </label>
-                                                            <input type="number" name="ph_number" id="ph_number" autocomplete="off" min="0" value="" class="w3-input w3-small" placeholder="Enter Number here" required>
-                                                        </div>-->
+                            <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
+                                <label>Add Employee Skills: <font color ="red"><span id ="pname_star">*</span></font></label><br>
+                                <select id="demo" name="skills[]" class=" form-control" multiple="multiple">
+                                    <?php foreach ($skills['status_message'] as $key) { ?>
+                                        <option value="<?php echo $key['skill_id']; ?>"><?php echo $key['skill_name']; ?></option> 
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style=" width: 100%;">
@@ -146,6 +150,9 @@ $role_name = $Arr[1];
     <!--         view all employee div ends -->
 </div>
 <script>
+    $(document).ready(function () {
+        $('#demo').multiselect();
+    });
     // fun for create employee
     $("#createEmployee_form").on('submit', function (e) {
         e.preventDefault();
@@ -162,6 +169,7 @@ $role_name = $Arr[1];
                 $('#register').html('<i class="fa fa-circle-o-notch fa-spin"></i> Saving Details');
             },
             success: function (response) {
+                console.log(response);
                 $('#register').prop('disabled', false);
                 $('#register').html('<i class="fa fa-user"></i> Create Employee');
                 //console.log(response);
@@ -220,29 +228,29 @@ $role_name = $Arr[1];
         $scope.message = '';
 
         $http.get(BASE_URL + "employee/getAllEmployee").then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             var data = response.data;
             $scope.profiles = [];
             var i, j, user_photos, phone, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
             if (data['status'] == 200) {
                 //alert(data['status_message'].length);
-                for (i = 0; i < data['status_message'].length; i++) {
-                    //alert(data['status_message'][i].company_name);
-                    if (data['status_message'][i].phone == '') {
+                for (i = 0; i < data.length; i++) {
+                    alert(data['skill'][i]);
+                    if (data[i].phone == '') {
                         phone = 'N/A';
                     } else {
-                        phone = data['status_message'][i].phone;
+                        phone = data[i].phone;
                     }
 
-                    $scope.profiles.push({'company_name': data['status_message'][i].name,
-                        'user_id': data['status_message'][i].user_id,
-                        'role': data['status_message'][i].role_name,
-                        'username': data['status_message'][i].user_name,
-                        'email': data['status_message'][i].user_email,
+                    $scope.profiles.push({'company_name': data[i].name,
+                        'user_id': data[i].user_id,
+                        'role': data[i].role_name,
+                        'username': data[i].user_name,
+                        'email': data[i].user_email,
                         'phone_no': phone,
-                        'salary': data['status_message'][i].salary
+                        'salary': data[i].salary
                     });
-                    //console.log($scope.profiles);
+                    console.log($scope.profiles);
                 }
             } else {
                 $scope.profiles = 500;

@@ -20,12 +20,31 @@ class Employee extends CI_Controller {
             redirect('login');
         }
         $data['company_name'] = Employee::getCompanyName();
-        //$data['users'] = Employee::getAllEmployee();
         $data['roles'] = Employee::getAllRoles();
+        $data['skills'] = Employee::getAllSkills();
 
         $this->load->view('includes/header');
         $this->load->view('pages/createEmployee', $data);
         $this->load->view('includes/footer');
+    }
+
+// fun for get all skills 
+    public function getAllSkills() {
+        $path = base_url();
+        $url = $path . 'api/admin/Createproject_api/getAllSkills';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        // authenticate API
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+        curl_setopt($ch, CURLOPT_USERPWD, API_USER . ":" . API_PASSWD);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPGET, 1);
+        $output = curl_exec($ch);
+        //close cURL resource
+        curl_close($ch);
+        $response = json_decode($output, true);
+        //echo $output;
+        return $response;
     }
 
     // fun for get all roles
@@ -73,7 +92,7 @@ class Employee extends CI_Controller {
         $company_id = $this->session->userdata('company_id');
 
         $path = base_url();
-        $url = $path . 'api/admin/Employee_api/getAllEmployee?company_id=' . $company_id;
+        $url = $path . 'api/admin/Employee_api/getAllEmployeeInfo?company_id=' . $company_id;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         // authenticate API
@@ -92,9 +111,16 @@ class Employee extends CI_Controller {
     // fun for create employee
     public function create_employee() {
         extract($_POST);
-        $data = $_POST;
+        //$data = $_POST;
         $company_id = $this->session->userdata('company_id');
         $data['company_id'] = $company_id;
+        $data['role'] = $role;
+        $data['eMail'] = $eMail;
+        $data['skills'] = json_encode($skills);
+        $data['username'] = $username;
+        $data['password'] = $password;
+        $data['salary'] = $salary;
+        //print_r($data);die();
         $path = base_url();
         $url = $path . 'api/admin/Employee_api/create_employee';
         $ch = curl_init($url);
