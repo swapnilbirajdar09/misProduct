@@ -52,47 +52,17 @@ class Employee_model extends CI_Model {
                 . "ON (us.user_id = ut.user_id) AND (ut.company_id = co.company_id) "
                 . "AND (ro.role_id = us.role_id) "
                 . "WHERE co.company_id = '$company_id' AND ro.role_name = 'Employee'";
+        
         $result = $this->db->query($sql);
-        $emp_skills = array();
-        $skill = '';
-        $skills = '';
-        $user_id = '';
-        $email = '';
-        $role = '';
-        $phone_no = '';
-        $salary = '';
-        $username = '';
+
         if ($result->num_rows() <= 0) {
             $response = array(
                 'status' => 500,
                 'status_message' => 'No data found.');
         } else {
-
-            foreach ($result->result_array() as $row) {
-                $skills = json_decode($row['skills'], true);
-                foreach ($skills as $sk) {
-                    $sqlSelect = "SELECT Skill_name FROM skill_tab WHERE skill_id = '$sk'";
-                    $result = $this->db->query($sqlSelect);
-                    $emp_skills[] = $result->result_array();
-                }
-                $skill = $emp_skills;
-                $user_id = $row['user_id'];
-                $role = $row['role_name'];
-                $email = $row['user_email'];
-                $phone_no = $row['phone_no'];
-                $salary = $row['salary'];
-                $username = $row['user_name'];
-            }
-
             $response = array(
                 'status' => 200,
-                'skill' => $skill,
-                '$user_id' => $user_id,
-                'role' => $role,
-                'email' => $email,
-                'phone_no' => $phone_no,
-                'salary' => $salary,
-                'username' => $username);
+                'status_message' => $result->result_array());
         }
         return $response;
     }

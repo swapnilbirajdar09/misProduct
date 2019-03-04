@@ -28,7 +28,7 @@
                             <div class="header-wrap">
                                 <div class="header-left">
                                     <h1 class="logo">
-                                        <a href="<?php echo base_url();?>">struct</a>
+                                        <a href="<?php echo base_url();?>">MIS</a>
                                     </h1> </div>
                                 <div class="header-right">
                                     <nav class="nav">

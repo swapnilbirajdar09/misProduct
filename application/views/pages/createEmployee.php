@@ -119,7 +119,7 @@ $role_name = $Arr[1];
                 <div class="container x_content">
 
                     <div class=" col-md-12 col-sm-12 col-xs-12 w3-margin-top ">   
-
+                        {{profiles}}
                         <div ng-if="profiles != 500" class="col-md-4 col-sm-4 col-xs-12 w3-padding-tiny" ng-repeat="p in profiles">
                             <!--                                    <div class="w3-col l12 ">-->
                             <div class="col-md-12 col-sm-12 col-xs-12 w3-round w3-white w3-card-2" style="">
@@ -226,16 +226,19 @@ $role_name = $Arr[1];
     app.controller("employeeController", function ($scope, $http, $window) {
 //------------------------------------------------------------------------------------------------------//
         $scope.message = '';
-
+        $scope.profiles = [];
         $http.get(BASE_URL + "employee/getAllEmployee").then(function (response) {
-            //console.log(response.data);
-            var data = response.data;
+            console.log(response);
+            var data = response.data['status_message'];
+            //console.log(JSON.parse(data));
+            //alert(data);
+            console.log(data);
             $scope.profiles = [];
             var i, j, user_photos, phone, education, alreadyfollowed, followers, firstname, user_location, alreadySent, receivedReq, birthday, today, user_fullname, user_designation, user_mother_tongue, user_marital_status, age, newAge, totage;
             if (data['status'] == 200) {
                 //alert(data['status_message'].length);
                 for (i = 0; i < data.length; i++) {
-                    alert(data['skill'][i]);
+                    //alert(data['skill'][i]);
                     if (data[i].phone == '') {
                         phone = 'N/A';
                     } else {
