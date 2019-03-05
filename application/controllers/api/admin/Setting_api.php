@@ -38,4 +38,14 @@ class Setting_api extends REST_Controller {
         return $this->response($result);
     }
 
+// -------fun to add skill 
+    public function addskills()
+    {
+        extract($_POST);
+        $data=$_POST;
+        $result=$this->Setting_model->addskills();
+        return $this->response($result);
+
+    }
+
 }

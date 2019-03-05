@@ -147,7 +147,7 @@
                                 <form id="admin_login-form" role="form" style="display: block;">
                                     <div id="adminOutput"></div>
                                     <div class="form-group">
-                                        <input type="text" name="admin_email" id="admin_email" tabindex="1" class="form-control" placeholder="Enter your Email Id here" value="">
+                                        <input type="text" name="admin_email" id="admin_email" tabindex="1" class="form-control" placeholder="Enter your Username here" value="">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="admin_password" id="admin_password" tabindex="2" class="form-control" placeholder="Enter your Password here">
