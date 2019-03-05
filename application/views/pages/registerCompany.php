@@ -64,7 +64,7 @@
                                     <div class="w3-col l12">
                                         <div class="col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                             <label>Company Name: <font color ="red"><span id ="pname_star">*</span></font></label>
-                                            <input type="text" name="company_name" autocomplete="off" value="" id="company_name" class="w3-input w3-small" placeholder="Enter password here" required>
+                                            <input type="text" name="company_name" autocomplete="off" value="" id="company_name" class="w3-input w3-small" placeholder="Enter Company Name here" required>
                                         </div>                                        
                                     </div>
 

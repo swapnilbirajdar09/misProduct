@@ -1,6 +1,11 @@
 
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/build/css/bootstrap-multiselect.css" type="text/css">
-<script type="text/javascript" src="<?php ?>assets/js/bootstrap-multiselect.js"></script>
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script> -->
+
+<!-- <script type="text/javascript" src="<?php ?>assets/js/bootstrap-multiselect.js"></script> -->
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="title_left w3-col l12">
@@ -56,7 +61,7 @@
                             <?php //print_r($skills);?>
                             <div class=" col-md-6 col-sm-12 col-xs-12 w3-margin-bottom">
                                 <label>Project Skills: <font color ="red"><span id ="pname_star">*</span></font></label><br>
-                                <select id="demo" name="skills[]" class=" form-control" multiple="multiple" style=" width: 100%;">
+                                <select id="demo" name="skills[]" class=" selectpicker form-control" multiple data-live-search="true" style=" width: 100%;">
                                     <?php foreach($skills['status_message'] as $key) { ?>
                                     <option value="<?php echo $key['skill_id']; ?>"><?php echo $key['skill_name']; ?></option> 
                                     <?php } ?>
@@ -69,6 +74,14 @@
                                 <textarea class="w3-input" name="project_description" id="project_description" rows="5" placeholder="Enter Project Description" style=" resize: none;" required></textarea>
                             </div>                          
                         </div>
+                        <select class="selectpicker" multiple data-live-search="true">
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                        </select>
+                        <script type="text/javascript">
+                            $('select').selectpicker();
+                        </script>
                         <div class="col-md-12 col-sm-12 col-xs-12 w3-center w3-margin-top w3-margin-bottom">
                             <button type="submit" id="uploadDocBtn" class="btn theme_bg w3-hover-text-white btn-large"><i class="fa fa-briefcase"></i> Create Project</button>
                             <button type="reset" id="clear" class="btn btn-success">Clear</button>                      
@@ -79,10 +92,14 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#demo').multiselect();
-    });    // fun for create project
+    });    
+</script>
+<script>
+    // fun for create project
     $("#createProject_form").on('submit', function (e) {
         e.preventDefault();
         dataString = $("#createProject_form").serialize();
