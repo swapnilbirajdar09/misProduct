@@ -72,9 +72,9 @@ class Setting_model extends CI_Model {
     }
 
     public function addskill($skillname) {
-        $sql = "INSERT INTO skill_tab(skill_name) VALUES (UPPER('$skillname'))";
+       // $sql = "INSERT INTO skill_tab(skill_name) VALUES (UPPER('$skillname'))";
 
-        if ($this->db->query($sql)) {
+        if ($this->db->insert('skill_tab',array('skill_name' =>$skillname))) {
             $response = array(
                 'status' => 200, //---------insert db success code
                 'status_message' => 'Skill  Added Successfully..'
@@ -89,8 +89,9 @@ class Setting_model extends CI_Model {
     }
 
     public function getSkills() {
-        $query = "SELECT * FROM skill_tab";
-        $result = $this->db->query($query);
+       // $query = "SELECT * FROM skill_tab";
+      $result = $this->db->get('skill_tab');
+        //$result = $this->db->query($query);
         // handle db error
         if (!$result) {
             // Has keys 'code' and 'message'
@@ -111,9 +112,9 @@ class Setting_model extends CI_Model {
 
     public function delskill($skillid) {
         //echo $skillid;die();
-        $sql = "DELETE FROM skill_tab WHERE skill_id='$skillid' ";
-
-        if ($this->db->query($sql)) {
+//$sql = "DELETE FROM skill_tab WHERE skill_id='$skillid' ";
+            $result=$this->db->delete('skill_tab', array('skill_id' => $skillid));  // Produces: // DELETE FROM mytable  // WHERE id = $id
+        if ($result) {
             $response = array(
                 'status' => 200, //---------insert db success code
                 'status_message' => 'Skill Delete Successfully..'

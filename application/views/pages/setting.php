@@ -30,7 +30,7 @@
                                         <input type="text" name="fixed_cost" value="<?php echo $fcost['status_message'][0]['setting_value']; ?>" placeholder="Enter Fixed Cost" id="fixed_cost" class="w3-input" required>
                                     </div>
                                     <div class="w3-col l4">
-                                        <button type="submit" class="w3-button w3-red">Update</button>
+                                        <button type="submit" class="w3-button theme_bg">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -42,7 +42,7 @@
                                         <input type="text" name="profit_margin" value="<?php echo $profit['status_message'][0]['setting_value']; ?>" placeholder="Enter Profit Margin" id="profit_margin" class="w3-input" required>
                                     </div>
                                     <div class="w3-col l4">
-                                        <button type="submit" class="w3-button w3-red">Update</button>
+                                        <button type="submit" class="w3-button theme_bg">Update</button>
                                     </div>
                                 </form>
                             </div>
