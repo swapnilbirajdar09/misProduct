@@ -20,6 +20,27 @@
             </div>
         </div>
     </div>
+    <?php  
+ echo $AUTH_SECRET = 'SvsS6rHdARqFq8Z';
+ echo '<br>';
+ echo $APPLICATION_ID = '76217';
+  echo '<br>';
+ echo $AUTH_KEY = 'WVz2CesF2WZBRJv';
+  echo '<br>';
+ echo $nonce = rand();
+  echo '<br>';
+ echo $timestamp = 1552560951;
+  echo '<br>';
+ echo $USER_LOGIN = 'swapnil';
+  echo '<br>';
+ echo $USER_PASSWORD = 'swapnil1234';
+  echo '<br>';
+ $signature_string = "application_id=".$APPLICATION_ID."&auth_key=".$AUTH_KEY."&nonce=".$nonce."&timestamp=".$timestamp."&user[login]=".$USER_LOGIN."&user[password]=".$USER_PASSWORD;
+ 
+ echo "stringForSignature: " . $signature_string . "<br><br>";
+ $signature = hash_hmac('sha1', $signature_string , $AUTH_SECRET);
+ echo $signature;
+?>
 </div>
 
 <!-- /page content -->
